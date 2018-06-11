@@ -34,6 +34,9 @@ loop do
             break if operands.index("^") == nil
             output<<operands.delete_at(operands.index("^"))
           end
+          if operands.index("*")!= nil
+            output<<operands.delete_at(operands.index("*"))
+          end
           operands<<operand
           operand = 0
         when "^"

@@ -1,56 +1,51 @@
-output=[]
-operands=[]
+loop do
+  output=[]
+  operands=[]
+  operand=0
 
-expression = gets.chomp.strip.scan(/\S/)
-expression.each do |the_element_of_expression|
-  case the_element_of_expression
-    when  "+"
-      if operands.index("-") != nil or operands.index("+") != nil
-        output << operands.delete("/")
-        output << operands.delete("*")
-        output << operands.delete("+")
-        output << operands.delete("-")
-      end
-      operands << the_element_of_expression
-    when "-"
-      if operands.index("+") != nil or operands.index("-") != nil
-        output << operands.delete("/")
-        output << operands.delete("*")
-        output << operands.delete("+")
-        output << operands.delete("-")
-      end
-      operands << the_element_of_expression
 
-    when  "*"
-      if operands.index("/") != nil or operands.index("*") != nil
-        output << operands.delete("/")
-        output << operands.delete("*")
-      end
-      operands << the_element_of_expression
-    when "/"
-      if operands.index("*") != nil or operands.index("/") != nil
-        output << operands.delete("/")
-        output << operands.delete("*")
-      end
-
-      operands << the_element_of_expression
-
-    when "^"
-
-      operands << the_element_of_expression
-
+  expression = gets.chomp.strip.scan(/\S/)
+  expression.each do |the_element_of_expression|
+    if the_element_of_expression == "^" || the_element_of_expression == "*" || the_element_of_expression == "+"
+      operand = the_element_of_expression
     else
       output << the_element_of_expression
-      if operands.index("^") != nil
-        output << operands.delete("^")
+    end
+
+    if operand != 0
+      case operand
+        when "+"
+          loop do
+            loop do
+              break if operands.index("^") == nil
+              output<<operands.delete_at(operands.index("^"))
+            end
+            break if operands.index("*") == nil
+            output<<operands.delete_at(operands.index("*"))
+          end
+          if operands.index("+")!= nil
+            output<<operands.delete_at(operands.index("+"))
+          end
+
+          operands<<operand
+          operand = 0
+        when "*"
+          loop do
+            break if operands.index("^") == nil
+            output<<operands.delete_at(operands.index("^"))
+          end
+          operands<<operand
+          operand = 0
+        when "^"
+          operands<<operand
+          operand = 0
       end
+
+    end
   end
-
+  loop do
+    break if operands == []
+    output << operands.pop
+  end
+  puts output.join("")
 end
-loop do
-  break if operands == []
-  output << operands.pop
-end
-output << operands
-puts output.join("")
-

@@ -22,7 +22,7 @@ end
 
 break if expression.index("(") == nil
 end
-puts expression1
+puts expression1.join(" ")
 
 
 

@@ -1,15 +1,11 @@
-expression = gets.chomp.strip.scan(/\S/)
 output=[]
-output1=[]
+operands=[]
+operand=0
+expression1 = []
+i = 0
+expression = gets.chomp.strip.scan(/\S/)
+
 loop do
-  expression1 = []
- e = 0
-  operands=[]
-  operand=0
-  i = 0
-
-
-
 
   expression.each do |the_element_of_expression|
     if the_element_of_expression == "("
@@ -18,15 +14,15 @@ loop do
     if i != 0
       expression1 << the_element_of_expression
     else
-    if the_element_of_expression == "^" || the_element_of_expression == "*" || the_element_of_expression == "+" || the_element_of_expression == "/" || the_element_of_expression == "-"
-      operand = the_element_of_expression
-    else
-      output << the_element_of_expression
-    end
+      if the_element_of_expression == "^" || the_element_of_expression == "*" || the_element_of_expression == "+" || the_element_of_expression == "/" || the_element_of_expression == "-"
+        operand = the_element_of_expression
+      else
+        output << the_element_of_expression
+      end
     end
     if the_element_of_expression == ")"
       i-=1
-      end
+    end
 
     if operand != 0
       if operand == "+" || operand == "-"
@@ -73,14 +69,13 @@ loop do
     output << operands.pop
   end
 
+  expression1.delete("(")
+  expression1.delete(")")
 
   expression = expression1
-  output1.unshift(output)
-  output = []
-  expression.shift
-  expression.pop
 
-  puts "стоп"
+  expression1 = []
+
   break if expression == []
 end
-puts output1.join("")
+puts output.join("")

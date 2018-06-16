@@ -1,4 +1,6 @@
 output=[]
+output1=[]
+output2=[]
 operands=[]
 operand=0
 expression1 = []
@@ -10,6 +12,7 @@ loop do
   expression.each do |the_element_of_expression|
     if the_element_of_expression == "("
       i+=1
+      output << "$"
     end
     if i != 0
       expression1 << the_element_of_expression
@@ -64,6 +67,7 @@ loop do
     end
   end
 
+
   loop do
     break if operands == []
     output << operands.pop
@@ -73,9 +77,19 @@ loop do
   expression1.delete(")")
 
   expression = expression1
-
   expression1 = []
+
+
+  if output1 == []
+    output1 = output
+  else
+  output1[output1.index("$")] = output
+
+  end
+  output = []
+
+
 
   break if expression == []
 end
-puts output.join("")
+puts output1.join("")

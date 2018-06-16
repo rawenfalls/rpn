@@ -72,10 +72,10 @@ loop do
     break if operands == []
     output << operands.pop
   end
-
-  expression1.delete("(")
-  expression1.delete(")")
-
+if expression1.index("(") != nil
+  expression1.delete_at(expression1.index("("))
+  expression1.delete_at(expression1.index(")"))
+end
   expression = expression1
   expression1 = []
 
@@ -83,6 +83,7 @@ loop do
   if output1 == []
     output1 = output
   else
+    output.delete("$")
   output1[output1.index("$")] = output
 
   end
@@ -92,4 +93,5 @@ loop do
 
   break if expression == []
 end
+
 puts output1.join("")
